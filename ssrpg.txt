@@ -1,0 +1,142 @@
+var loc_ = [
+ ^"rocky",
+ ^"deadwood",
+ ^"caves",
+ ^"mushroom",
+ ^"haunted",
+ ^"boiling",
+ ^"icy",
+ ^"temple"]
+
+// 伐木工、礦工開關
+var harvest_ = false
+
+// 屬性克制
+var weak_ = stone
+?foe = poison
+ weak_ = ice
+?foe = vigor
+ weak_ = poison
+?foe = aether
+ weak_ = vigor
+?foe = fire
+ weak_ = aether
+?foe = ice
+ weak_ = fire
+
+// 腳本編輯器
+disable hud ru
+
+var mind_ = ui.AddButton()
+mind_.text = "[M]"
+mind_.anchor = bottom_center
+mind_.dock = bottom_center
+mind_.SetPressed(mind_open)
+ui.root.Add(mind_)
+
+func mind_open()
+ ui.OpenMind()
+
+// 左上角顯示
+>`0,1,#red,@loc.id@
+>`0,2,#green,@foe.id@/
+^@foe.distance@/
+^@foe.state@/
+^@foe.time@
+
+func equip_skill(skill)
+ Equipr @skill@
+ var a = item.getcooldown(@skill@)
+ ?a <= 0
+  Activate r
+
+?harvest.distance <= 3 & harvest_
+ ?harvest = boulder
+  Equip shovel
+ :?harvest = tree
+  equip_skill(hatchet)  
+
+?foe.distance > 20
+ Equipl = ouroboros
+ Equipr = triskelion
+ ?pickup.distance <= 10
+  Equipl = star
+
+:?hp <= maxhp / 2 & foe ! Boss
+ Equipl sword vigor
+ Equipr shield vigor
+ 
+:
+ ?loc = @loc_[0]@
+  rocky_
+ ?loc = @loc_[1]@
+  deadwood_
+ ?loc = @loc_[2]@
+  caves_
+ ?loc = @loc_[3]@
+  mushroom_
+ ?loc = @loc_[4]@
+  haunted_
+ ?loc = @loc_[5]@
+  boiling_
+ ?loc = @loc_[6]@
+  icy_
+ ?loc = @loc_[7]@
+  temple_
+
+func rocky_()
+ >rocky
+
+func deadwood_()
+ >deadwood
+
+func caves_()
+ >caves
+
+func mushroom_()
+ >mushroom
+
+func haunted_()
+ >haunted
+
+func boiling_()
+ >boiling
+
+func icy_()
+ >icy
+
+func temple_()
+ >temple
+
+// ?loc = @loc_[0]@
+//   Equipl sword vigor
+//   Equipr shield vigor
+
+//  ?loc = @loc_[1]@
+//   Equipl wand vigor
+//   Equipr bow
+//   ?foe = immune_to_ranged & foe.distance <= 20
+//    Equipr sword ice
+
+//  ?loc = @loc_[2]@
+//   Equipl wand vigor
+//   Equipr bow
+//   ?foe = Boss
+//    ?foe.state = 133 & foe.time >= 20
+//     equip_skill(mind)
+
+// ?loc = @loc_[3]@
+// Equipl wand poison 7
+// Equipr wand poison 6
+// ?foe = Boss_fat & foe.distance <= 10
+//     Use(mind)
+// :?foe = Boss_skinny
+// Equipl sword vigor
+// Equipr shield vigor
+
+// ?loc = @loc_[4]@
+// Equipl wand vigor
+// Equipr bow
+// ?foe = Boss
+// ?foe.state = 32 & foe.time >= 65
+//     Use(mind)
