@@ -1,12 +1,4 @@
-var loc_ = [
- ^"rocky",
- ^"deadwood",
- ^"caves",
- ^"mushroom",
- ^"haunted",
- ^"boiling",
- ^"icy",
- ^"temple"]
+var loc_ = ["rocky","deadwood","caves","mushroom","haunted","boiling","icy","temple"]
 
 // 伐木工、礦工開關
 var harvest_ = false
