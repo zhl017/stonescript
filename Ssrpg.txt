@@ -1,2 +1,2 @@
->`1,0,#red,Welcome
->`2,0,#red,@loc.id@
+>`0,1,#red,Welcome
+>`0,2,#red,@loc.id@
